@@ -1,0 +1,17 @@
+{
+  "name": "webauth-iii-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon"
+  },
+  "repository": "https://github.com/olympiawoj/webauth-iii-challenge.git",
+  "author": "olympia <owojcik7@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
