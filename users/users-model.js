@@ -12,7 +12,9 @@ function find() {
 }
 
 function findBy(filter) {
-  return db("users").where({ filter });
+  return db("users")
+    .where(filter)
+    .first();
 }
 
 //this function is running an async function before returning the next async function

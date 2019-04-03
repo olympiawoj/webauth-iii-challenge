@@ -14,3 +14,23 @@ router.post("/register", async (req, res) => {
   }
 });
 module.exports = router;
+
+//LOGIN
+
+router.post("/login", async (req, res) => {
+  let { username, password, department } = req.body;
+  console.log(username, password);
+  try {
+    if (username && password) {
+      console.log("yes");
+      const user = await Users.findBy({ username });
+      res.status(200).json(user);
+    } else {
+      res
+        .status(401)
+        .json({ message: "Please include a username and password" });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
