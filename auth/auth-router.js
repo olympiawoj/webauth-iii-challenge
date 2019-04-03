@@ -1,10 +1,14 @@
 const router = require("express").Router();
 const Users = require("../users/users-model.js");
+const bcrypt = require("bcryptjs");
 
 //REGISTER
 router.post("/register", async (req, res) => {
   let user = req.body;
   console.log(user);
+  //hash the password
+  const hash = bcrypt.hashSync(user.password, 8);
+  user.password = hash;
   try {
     const saved = await Users.add(user);
     res.status(201).json(saved);
@@ -16,7 +20,6 @@ router.post("/register", async (req, res) => {
 module.exports = router;
 
 //LOGIN
-
 router.post("/login", async (req, res) => {
   let { username, password, department } = req.body;
   console.log(username, password);
@@ -34,3 +37,5 @@ router.post("/login", async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+//LOGOUT
