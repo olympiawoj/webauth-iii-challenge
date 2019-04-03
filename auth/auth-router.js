@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Users = require("../users/users-model.js");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 //REGISTER
@@ -27,7 +28,11 @@ router.post("/login", async (req, res) => {
     if (username && password) {
       console.log("yes");
       const user = await Users.findBy({ username });
-      res.status(200).json(user);
+      if (user && bcrypt.compareSync(password, user.password)) {
+        res.status(200).json({ message: `Welcome ${user.username}` });
+      } else {
+        res.status(401).json({ message: "Invalid credentials" });
+      }
     } else {
       res
         .status(401)
