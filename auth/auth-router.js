@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Users = require("../users/users-model.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const secret = require("../api/secrets.js").jwtSecret;
 
 //REGISTER
 router.post("/register", async (req, res) => {
@@ -28,7 +29,9 @@ router.post("/login", async (req, res) => {
     if (username && password) {
       console.log("yes");
       const user = await Users.findBy({ username });
+      console.log(user);
       const token = generateToken(user);
+      console.log(token);
       if (user && bcrypt.compareSync(password, user.password)) {
         res.status(200).json({ message: `Welcome ${user.username}`, token });
       } else {
@@ -52,7 +55,7 @@ function generateToken(user) {
     subject: user.id,
     username: user.username
   };
-  const secret = "keep it on the low";
+  //   const secret = requires("../api/secrets").jwtSecret;
   const options = {
     expiresIn: "1d"
   };
